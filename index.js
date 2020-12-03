@@ -14,6 +14,11 @@ app.get('/heartbeat/:ip_address', (req, res) => {
 
     pingSession.pingHost(ip_address, (error, target) => {
         if(error) {
+            if (error instanceof ping.RedirectReceivedError) {
+                res.status(200);
+                res.send({ result: true, message: target + " is not receiving but redirecting itself!" });
+            }
+
             res.status(400);
 			if (error instanceof ping.RequestTimedOutError)
                 res.send({ result: false, message: target + ": Not alive" });
