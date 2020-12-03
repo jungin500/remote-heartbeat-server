@@ -1,0 +1,23 @@
+{
+  "name": "remote-heartbeat-server",
+  "version": "1.0.0",
+  "description": "- Remote network heartbeat check server using ICMP ping\r - Serves heartbeat server with ability to ping current IPv4 network subnet range\r - API is simple; just use http://host:port/heartbeat/your.ip.address.here; it would return result HTTP code to determine network status.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jungin500/remote-heartbeat-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jungin500/remote-heartbeat-server/issues"
+  },
+  "homepage": "https://github.com/jungin500/remote-heartbeat-server#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "net-ping": "^1.2.3"
+  }
+}
