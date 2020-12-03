@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jungin500/remote-heartbeat-server#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "is-port-reachable": "^3.0.0",
     "net-ping": "^1.2.3"
   }
 }
