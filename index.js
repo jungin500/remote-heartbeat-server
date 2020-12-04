@@ -12,10 +12,12 @@ const SERVER_PORT = 8080
 const checkCommonlyUsedPortsOpened = async (ip_address) => {
     const portList = [80, 22, 3389, 443, 41222, 8080, 8443]
     
-    for(const port of portList)
+    for(const port of portList) {
+        console.log("Checking port " + port);
         if(await isPortReachable(port, { host: ip_address, timeout: 100 }))
-            return true;
-            
+            return port;
+    }
+
     return false;
 }
 
@@ -24,9 +26,10 @@ app.get('/heartbeat/:ip_address', (req, res) => {
 
     pingSession.pingHost(ip_address, async (error, target) => {
         if(error) {
-            if (await checkCommonlyUsedPortsOpened(ip_address)) {
+            const portTestResult = await checkCommonlyUsedPortsOpened(ip_address)
+            if (portTestResult !== false) {
                 res.status(200);
-                res.send({ result: true, message: target + " is alive" });
+                res.send({ result: true, message: target + ` is alive - port ${portTestResult} is open` });
                 return;
             } else if (error instanceof ping.RedirectReceivedError) {
                 res.status(200);
@@ -42,7 +45,7 @@ app.get('/heartbeat/:ip_address', (req, res) => {
             return;
         }
         res.status(200);
-        res.send({ result: true, message: target + " is alive" });
+        res.send({ result: true, message: target + " is alive - icmp ping responded" });
     })
 })
 
